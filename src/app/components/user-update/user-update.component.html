@@ -1,0 +1,42 @@
+<form [formGroup]="formGroup" class="user-form">
+    <div class="form-container">
+      <div class="row columns">
+        <h1>Update User</h1>
+        <label>Name
+          <input type="text" formControlName="name" [value]="name">
+        </label>
+        <div class="alert" *ngIf="!formGroup.controls['name'].valid && formGroup.controls['name'].touched">{{ titleAlert }}</div>
+  
+        <label>Surname
+            <input type="text" formControlName="surname" [value]="surname">
+          </label>
+          <div class="alert" *ngIf="!formGroup.controls['surname'].valid && formGroup.controls['surname'].touched">{{ titleAlert }}</div>
+  
+        <label>Gender
+            <mat-form-field class="user-full-width">
+                <mat-select placeholder="Select Gender" formControlName="gender" [(ngModel)]="gender">
+                  <mat-option *ngFor="let gender of genders" [value]="gender">
+                    {{ gender }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+          </label>
+          <div class="alert" *ngIf="!formGroup.controls['gender'].valid && formGroup.controls['gender'].touched">{{ titleAlert }}</div>
+  
+        <label>Best Friend
+            <mat-form-field class="user-full-width">
+                <input type="text" formControlName="friend" placeholder="Pick Best Friend" aria-label="Number" matInput [formControl]="friendControl" [matAutocomplete]="auto" [(ngModel)]="friend">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let friend of filteredFriends | async" [value]="friend">
+                    {{ friend }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+          </label>
+          <div style="text-align:right;">
+            <button mat-button routerLink="" class="mat-button mat-warn" style="width:100px;">Cancel</button>
+            <button mat-button routerLink="" class="mat-button mat-primary" style="width:100px;" (click)="submit(formGroup.value)" [disabled]="!formGroup.valid">Submit</button>
+          </div>        
+      </div>
+    </div>
+  </form>
